@@ -1,0 +1,11 @@
+{
+  "name": "VidéoFP",
+  "short_name": "VidéoFP",
+  "description": "Animez vos photos avec l'intelligence artificielle.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#111827",
+  "icons": [{"src":"icon.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]
+}
