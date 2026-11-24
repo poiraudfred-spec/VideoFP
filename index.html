@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>VidéoFP — Animez vos photos</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#151d31;--line:#2b3853;--muted:#aab6cc;--blue:#5b8cff;--purple:#a16bff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#202c50 0,#0b1020 55%);font:16px system-ui,-apple-system,Segoe UI,sans-serif;color:#f7f8fc}
+main{width:min(720px,100%);margin:auto;padding:28px 18px 48px}
+header{text-align:center;padding:18px 0 24px}.logo{display:inline-grid;place-items:center;width:66px;height:66px;border-radius:20px;background:linear-gradient(135deg,var(--blue),var(--purple));font-size:27px;font-weight:900;letter-spacing:-2px;box-shadow:0 12px 35px #5b8cff44}
+h1{font-size:30px;margin:13px 0 4px;letter-spacing:-1px}header p,.muted{color:var(--muted);margin:0}
+.panel{background:#151d31ef;border:1px solid var(--line);border-radius:22px;padding:20px;margin:14px 0;box-shadow:0 15px 45px #0003}
+h2{font-size:18px;margin:0 0 14px}.drop{border:1.5px dashed #61739b;border-radius:16px;min-height:180px;display:grid;place-items:center;text-align:center;padding:16px;background:#0d1528}
+.drop img{display:none;max-width:100%;max-height:280px;object-fit:contain;border-radius:12px}
+input[type=file]{max-width:100%;margin-top:12px;color:var(--muted)}
+textarea{width:100%;min-height:112px;resize:vertical;background:#0d1528;border:1px solid var(--line);border-radius:13px;padding:14px;color:white;font:inherit}
+button,.linkbtn{display:block;width:100%;border:0;border-radius:14px;padding:15px 18px;font:700 16px system-ui;cursor:pointer;text-align:center;text-decoration:none}
+.primary{background:linear-gradient(100deg,var(--blue),var(--purple));color:white;margin-top:14px}
+.secondary{background:#25314b;color:white;margin-top:10px;border:1px solid #3a4b6c}
+.notice{font-size:13px;line-height:1.5;color:#c3cce0;background:#202b42;border-radius:13px;padding:13px;margin-top:14px}
+footer{text-align:center;color:#8492ad;font-size:12px;padding:18px}.tag{display:inline-block;background:#263654;color:#c9d8ff;padding:5px 9px;border-radius:99px;font-size:12px;margin-bottom:10px}
+</style>
+</head>
+<body>
+<main>
+<header><div class="logo">FP</div><h1>VidéoFP</h1><p>Animez vos photos avec l'intelligence artificielle</p></header>
+<section class="panel">
+<span class="tag">ÉTAPE 1</span><h2>Choisissez une photo</h2>
+<div class="drop"><div id="placeholder">🖼️<br><strong>Ajoutez une photo depuis votre téléphone</strong><br><span class="muted">Personne, voiture, animal ou paysage</span></div><img id="preview" alt="Aperçu de votre photo"></div>
+<input id="photo" type="file" accept="image/*">
+</section>
+<section class="panel">
+<span class="tag">ÉTAPE 2</span><h2>Décrivez le mouvement souhaité</h2>
+<textarea id="prompt" maxlength="500" placeholder="Exemple : La personne sourit, tourne doucement la tête et fait un signe de la main."></textarea>
+<button class="primary" id="copy" type="button">Copier ma description</button>
+<a class="linkbtn secondary" href="https://igorcsis.github.io/nifty-vid/" target="_blank" rel="noopener">Ouvrir le moteur vidéo IA de test</a>
+<div class="notice"><strong>Important :</strong> la génération vidéo n'est pas encore intégrée directement à VidéoFP. Pour ce premier essai, ouvrez le moteur externe, sélectionnez-y à nouveau votre photo et collez votre description. Le service externe peut être limité ou indisponible selon la charge. Cette page ne téléverse pas votre photo.</div>
+</section>
+<section class="panel"><h2>La suite du projet</h2><p class="muted">Prochaines étapes : intégrer un moteur de génération vidéo, puis ajouter la voix et la synchronisation des lèvres.</p></section>
+<footer>VidéoFP · Première version de l'interface</footer>
+</main>
+<script>
+const picker=document.getElementById('photo'),preview=document.getElementById('preview'),placeholder=document.getElementById('placeholder');
+picker.addEventListener('change',()=>{const file=picker.files&&picker.files[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Choisissez un fichier image.');return;}preview.src=URL.createObjectURL(file);preview.style.display='block';placeholder.style.display='none';});
+document.getElementById('copy').addEventListener('click',async()=>{const value=document.getElementById('prompt').value.trim();if(!value){alert('Écrivez d’abord le mouvement souhaité.');return;}try{await navigator.clipboard.writeText(value);alert('Description copiée. Collez-la dans le moteur vidéo IA.');}catch(e){document.getElementById('prompt').select();alert('Sélectionnez puis copiez votre description.');}});
+</script>
+</body>
+</html>
