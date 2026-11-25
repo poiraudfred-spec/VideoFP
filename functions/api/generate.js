@@ -118,7 +118,7 @@ export async function onRequest(context) {
   16,
   false,
   true
-]:
+];
 
     const submitResponse = await fetch(
       `${HF_SPACE_BASE}/gradio_api/call/generate_video`,
