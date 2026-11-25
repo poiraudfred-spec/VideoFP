@@ -101,24 +101,24 @@ export async function onRequest(context) {
       meta: { _type: "gradio.FileData" }
     };
 
-    const data = [
-      inputImage,
-      null,
-      prompt,
-      steps,
-      DEFAULT_NEGATIVE_PROMPT,
-      duration,
-      1,
-      1,
-      42,
-      true,
-      6,
-      "UniPCMultistep",
-      3.0,
-      16,
-      false,
-      true
-    ];
+  const data = [
+  inputImage,
+  null,
+  prompt,
+  29,
+  DEFAULT_NEGATIVE_PROMPT,
+  duration,
+  3,
+  7,
+  42,
+  true,
+  9,
+  "UniPCMultistep",
+  9.3,
+  16,
+  false,
+  true
+]:
 
     const submitResponse = await fetch(
       `${HF_SPACE_BASE}/gradio_api/call/generate_video`,
