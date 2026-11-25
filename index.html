@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -6,59 +7,268 @@
 <meta name="theme-color" content="#111827">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.png" type="image/png">
-<link rel="apple-touch-icon" href="icon.png">
 <title>VidéoFP — Animez vos photos</title>
 <style>
 :root{color-scheme:dark;--bg:#0b1020;--panel:#151d31;--line:#2b3853;--muted:#aab6cc;--blue:#5b8cff;--purple:#a16bff}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#202c50 0,#0b1020 55%);font:16px system-ui,-apple-system,Segoe UI,sans-serif;color:#f7f8fc}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#202c50 0,#0b1020 55%);font:16px system-ui,sans-serif;color:#f7f8fc}
 main{width:min(720px,100%);margin:auto;padding:28px 18px 48px}
-header{text-align:center;padding:18px 0 24px}.logo{display:inline-grid;place-items:center;width:66px;height:66px;border-radius:20px;background:linear-gradient(135deg,var(--blue),var(--purple));font-size:27px;font-weight:900;letter-spacing:-2px;box-shadow:0 12px 35px #5b8cff44}
-h1{font-size:30px;margin:13px 0 4px;letter-spacing:-1px}header p,.muted{color:var(--muted);margin:0}
-.panel{background:#151d31ef;border:1px solid var(--line);border-radius:22px;padding:20px;margin:14px 0;box-shadow:0 15px 45px #0003}
-h2{font-size:18px;margin:0 0 14px}.drop{border:1.5px dashed #61739b;border-radius:16px;min-height:180px;display:grid;place-items:center;text-align:center;padding:16px;background:#0d1528}
+header{text-align:center;padding:18px 0 24px}
+.logo{display:inline-grid;place-items:center;width:66px;height:66px;border-radius:20px;background:linear-gradient(135deg,var(--blue),var(--purple));font-size:27px;font-weight:900;box-shadow:0 12px 35px #5b8cff44}
+h1{font-size:30px;margin:13px 0 4px}
+header p,.muted{color:var(--muted)}
+.panel{background:#151d31ef;border:1px solid var(--line);border-radius:22px;padding:20px;margin:14px 0}
+h2{font-size:18px;margin:0 0 14px}
+.drop{border:1.5px dashed #61739b;border-radius:16px;min-height:180px;display:grid;place-items:center;text-align:center;padding:16px;background:#0d1528}
 .drop img{display:none;max-width:100%;max-height:280px;object-fit:contain;border-radius:12px}
 input[type=file]{max-width:100%;margin-top:12px;color:var(--muted)}
 textarea{width:100%;min-height:112px;resize:vertical;background:#0d1528;border:1px solid var(--line);border-radius:13px;padding:14px;color:white;font:inherit}
 button,.linkbtn{display:block;width:100%;border:0;border-radius:14px;padding:15px 18px;font:700 16px system-ui;cursor:pointer;text-align:center;text-decoration:none}
 .primary{background:linear-gradient(100deg,var(--blue),var(--purple));color:white;margin-top:14px}
+.primary:disabled{opacity:.45;cursor:not-allowed}
 .secondary{background:#25314b;color:white;margin-top:10px;border:1px solid #3a4b6c}
 .notice{font-size:13px;line-height:1.5;color:#c3cce0;background:#202b42;border-radius:13px;padding:13px;margin-top:14px}
-footer{text-align:center;color:#8492ad;font-size:12px;padding:18px}.tag{display:inline-block;background:#263654;color:#c9d8ff;padding:5px 9px;border-radius:99px;font-size:12px;margin-bottom:10px}
+.tag{display:inline-block;background:#263654;color:#c9d8ff;padding:5px 9px;border-radius:99px;font-size:12px;margin-bottom:10px}
+#status{font-size:14px;line-height:1.5;color:#c3cce0;white-space:pre-wrap}
+video{width:100%;border-radius:14px;margin-top:12px;background:#000}
+footer{text-align:center;color:#8492ad;font-size:12px;padding:18px}
 </style>
 </head>
 <body>
 <main>
-<header><div class="logo">FP</div><h1>VidéoFP</h1><p>Animez vos photos avec l'intelligence artificielle</p></header>
+<header>
+<div class="logo">FP</div>
+<h1>VidéoFP</h1>
+<p>Animez vos photos avec l'intelligence artificielle</p>
+</header>
+
 <section class="panel">
-<span class="tag">ÉTAPE 1</span><h2>Choisissez une photo</h2>
-<div class="drop"><div id="placeholder">🖼️<br><strong>Ajoutez une photo depuis votre téléphone</strong><br><span class="muted">Personne, voiture, animal ou paysage</span></div><img id="preview" alt="Aperçu de votre photo"></div>
+<span class="tag">ÉTAPE 1</span>
+<h2>Choisissez une photo</h2>
+<div class="drop">
+<div id="placeholder">🖼️<br><strong>Ajoutez une photo depuis votre téléphone</strong><br><span class="muted">Personne, voiture, animal ou paysage</span></div>
+<img id="preview" alt="Aperçu de votre photo">
+</div>
 <input id="photo" type="file" accept="image/*">
 </section>
+
 <section class="panel">
-<span class="tag">ÉTAPE 2</span><h2>Décrivez le mouvement souhaité</h2>
+<span class="tag">ÉTAPE 2</span>
+<h2>Décrivez le mouvement souhaité</h2>
 <textarea id="prompt" maxlength="500" placeholder="Exemple : La personne sourit, tourne doucement la tête et fait un signe de la main."></textarea>
-<button class="primary" id="copy" type="button">Copier ma description</button>
-<a class="linkbtn secondary" href="https://igorcsis.github.io/nifty-vid/" target="_blank" rel="noopener">Ouvrir le moteur vidéo IA de test</a>
-<div class="notice"><strong>Important :</strong> la génération vidéo n'est pas encore intégrée directement à VidéoFP. Pour ce premier essai, ouvrez le moteur externe, sélectionnez-y à nouveau votre photo et collez votre description. Le service externe peut être limité ou indisponible selon la charge. Cette page ne téléverse pas votre photo.</div>
+<button class="primary" id="generate" type="button" disabled>Créer ma vidéo</button>
+<p id="status">Choisissez une photo et décrivez le mouvement pour commencer.</p>
+<div class="notice">
+<strong>À savoir :</strong> la création utilise un moteur communautaire gratuit. L'attente peut être longue selon le nombre de personnes qui l'utilisent. Votre photo est envoyée à ce service externe pour générer la vidéo.
+</div>
 </section>
-<section class="panel"><h2>La suite du projet</h2><p class="muted">Prochaines étapes : intégrer un moteur de génération vidéo, puis ajouter la voix et la synchronisation des lèvres.</p></section>
-<footer>VidéoFP · Première version de l'interface</footer>
+
+<section class="panel" id="result" hidden>
+<h2>Votre vidéo</h2>
+<video id="video" controls playsinline></video>
+<a class="linkbtn secondary" id="download" href="#" download="videofp.mp4">Télécharger la vidéo</a>
+</section>
+
+<footer>VidéoFP · Version personnelle</footer>
 </main>
-<script>
-const picker=document.getElementById('photo'),preview=document.getElementById('preview'),placeholder=document.getElementById('placeholder');
-picker.addEventListener('change',()=>{const file=picker.files&&picker.files[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Choisissez un fichier image.');return;}preview.src=URL.createObjectURL(file);preview.style.display='block';placeholder.style.display='none';});
-document.getElementById('copy').addEventListener('click',async()=>{const value=document.getElementById('prompt').value.trim();if(!value){alert('Écrivez d’abord le mouvement souhaité.');return;}try{await navigator.clipboard.writeText(value);alert('Description copiée. Collez-la dans le moteur vidéo IA.');}catch(e){document.getElementById('prompt').select();alert('Sélectionnez puis copiez votre description.');}});
-</script>
 
 <script>
+const HF_SPACE_BASE = "https://cbensimon-wan2-2-fp8da-aoti-preview2.hf.space";
+
+const picker = document.getElementById("photo");
+const preview = document.getElementById("preview");
+const placeholder = document.getElementById("placeholder");
+const promptInput = document.getElementById("prompt");
+const generateButton = document.getElementById("generate");
+const statusText = document.getElementById("status");
+const result = document.getElementById("result");
+const video = document.getElementById("video");
+const download = document.getElementById("download");
+
+let selectedPhoto = null;
+let busy = false;
+
+picker.addEventListener("change", () => {
+  const file = picker.files && picker.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("Choisissez un fichier image.");
+    return;
+  }
+
+  if (file.size > 8 * 1024 * 1024) {
+    alert("La photo ne doit pas dépasser 8 Mo.");
+    return;
+  }
+
+  selectedPhoto = file;
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+  placeholder.style.display = "none";
+  refreshButton();
+  statusText.textContent = "Photo chargée. Décrivez maintenant le mouvement.";
+});
+
+promptInput.addEventListener("input", refreshButton);
+
+function refreshButton() {
+  generateButton.disabled =
+    !selectedPhoto || !promptInput.value.trim() || busy;
+}
+
+generateButton.addEventListener("click", async () => {
+  if (!selectedPhoto || busy) return;
+
+  busy = true;
+  refreshButton();
+  result.hidden = true;
+  video.removeAttribute("src");
+  statusText.textContent = "Envoi de la photo au moteur vidéo...";
+
+  const messages = [
+    "Envoi de la photo...",
+    "Attente dans la file du serveur vidéo...",
+    "Préparation du modèle Wan 2.2...",
+    "Création des images de la vidéo...",
+    "Assemblage de votre vidéo...",
+    "Cela peut prendre quelques minutes..."
+  ];
+
+  let messageIndex = 0;
+  const timer = setInterval(() => {
+    messageIndex = Math.min(messageIndex + 1, messages.length - 1);
+    statusText.textContent = messages[messageIndex];
+  }, 8000);
+
+  try {
+    const form = new FormData();
+    form.append("image", selectedPhoto);
+    form.append("params", JSON.stringify({
+      prompt: promptInput.value.trim(),
+      duration_seconds: 3.5,
+      steps: 6
+    }));
+
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      body: form
+    });
+
+    if (!response.ok || !response.body) {
+      let message = "Erreur du serveur.";
+      try {
+        const data = await response.json();
+        if (data.error) message = data.error;
+      } catch {}
+      throw new Error(message);
+    }
+
+    const videoUrl = await consumeSse(response.body);
+
+    video.src = videoUrl;
+    download.href = videoUrl;
+    result.hidden = false;
+    statusText.textContent = "Vidéo créée avec succès !";
+    video.load();
+
+  } catch (error) {
+    statusText.textContent =
+      "La création n'a pas abouti : " +
+      (error.message || String(error)) +
+      "\nTu peux réessayer un peu plus tard.";
+  } finally {
+    clearInterval(timer);
+    busy = false;
+    refreshButton();
+  }
+});
+
+async function consumeSse(stream) {
+  const reader = stream.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { value, done } = await reader.read();
+
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+    const events = buffer.split(/\r?\n\r?\n/);
+    buffer = events.pop() || "";
+
+    for (const raw of events) {
+      const event = parseEvent(raw);
+      if (!event) continue;
+
+      if (event.name === "complete") {
+        const payload = JSON.parse(event.data);
+        const first = Array.isArray(payload) ? payload[0] : null;
+        const url = extractVideoUrl(first);
+
+        if (!url) {
+          throw new Error("Aucune vidéo n'a été renvoyée.");
+        }
+
+        return url;
+      }
+
+      if (event.name === "error") {
+        let message = event.data;
+        try {
+          const parsed = JSON.parse(event.data);
+          if (typeof parsed === "string") message = parsed;
+        } catch {}
+        throw new Error(message || "Erreur du moteur vidéo.");
+      }
+    }
+  }
+
+  throw new Error("La connexion s'est interrompue avant la fin de la création.");
+}
+
+function parseEvent(raw) {
+  let name = "message";
+  const data = [];
+
+  for (const line of raw.split(/\r?\n/)) {
+    if (line.startsWith("event:")) {
+      name = line.slice(6).trim();
+    } else if (line.startsWith("data:")) {
+      data.push(line.slice(5).trim());
+    }
+  }
+
+  if (!data.length) return null;
+  return { name, data: data.join("\n") };
+}
+
+function extractVideoUrl(file) {
+  if (!file) return null;
+
+  if (typeof file === "string") {
+    return `${HF_SPACE_BASE}/gradio_api/file=${file}`;
+  }
+
+  if (typeof file === "object") {
+    if (file.url) {
+      return new URL(file.url, HF_SPACE_BASE).href;
+    }
+    if (file.path) {
+      return `${HF_SPACE_BASE}/gradio_api/file=${file.path}`;
+    }
+  }
+
+  return null;
+}
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./sw.js")
-      .then(() => console.log("VidéoFP : service worker activé"))
-      .catch((error) => console.error("Erreur service worker :", error));
+      .catch(error => console.error("Service worker :", error));
   });
 }
 </script>
-
 </body>
 </html>
