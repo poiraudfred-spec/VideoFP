@@ -49,7 +49,6 @@ const picker=document.getElementById('photo'),preview=document.getElementById('p
 picker.addEventListener('change',()=>{const file=picker.files&&picker.files[0];if(!file)return;if(!file.type.startsWith('image/')){alert('Choisissez un fichier image.');return;}preview.src=URL.createObjectURL(file);preview.style.display='block';placeholder.style.display='none';});
 document.getElementById('copy').addEventListener('click',async()=>{const value=document.getElementById('prompt').value.trim();if(!value){alert('Écrivez d’abord le mouvement souhaité.');return;}try{await navigator.clipboard.writeText(value);alert('Description copiée. Collez-la dans le moteur vidéo IA.');}catch(e){document.getElementById('prompt').select();alert('Sélectionnez puis copiez votre description.');}});
 </script>
-  </script>
 
 <script>
 if ("serviceWorker" in navigator) {
