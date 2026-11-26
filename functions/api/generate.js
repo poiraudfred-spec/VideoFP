@@ -101,20 +101,20 @@ export async function onRequest(context) {
       meta: { _type: "gradio.FileData" }
     };
 
-  const data = [
+    const data = [
   inputImage,
   null,
   prompt,
-  29,
+  6,
   DEFAULT_NEGATIVE_PROMPT,
   duration,
-  3,
-  7,
+  1,
+  1,
   42,
   true,
-  9,
+  6,
   "UniPCMultistep",
-  9.3,
+  3.0,
   16,
   false,
   true
